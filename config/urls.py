@@ -27,7 +27,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 from authorization import router as authorize_router
 
-API_TITLE = '{project_name} API'
+API_TITLE = 'Authorization (AM SerVer)'
 
 urlpatterns = [
     url(r'^swagger/$', get_swagger_view(title=API_TITLE)),
@@ -36,7 +36,11 @@ urlpatterns = [
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^docs/', include_docs_urls(title=API_TITLE, description='')),
 
+<<<<<<< HEAD
     url(r'^micro-service/authorize/', include(authorize_router)),
+=======
+    url(r'^micro-service/am/', include('authorization.routers', namespace='auth-urls')),
+>>>>>>> ladon
 
 ]
 
