@@ -27,64 +27,65 @@ from django.shortcuts import get_object_or_404
 from authorization import serializers, models
 
 
-class AuthorizationViewSet(viewsets.GenericViewSet):
+class AuthorizationPolicyViewSet(viewsets.ModelViewSet):
     """Authorization Viewset, every authorization http request handles by this class
 
     """
-    model = models.Authorization
-    serializer_class = serializers.AuthorizationSerializer
+    model = models.AuthPolicy
+    queryset = model.objects.all()
+    serializer_class = serializers.AuthorizationPolicySerializer
     # TODO : remove AllowAny permission with proper permission class
     permission_classes = (permissions.AllowAny, )
 
-    def get_object(self, source, target):
-        """
+    def update_permission_set(self, request, source_pk, perm_pk):
+        """Policy Permission set will be updated here
 
-        :return: Authorization object
+        :param request:
+        :param source_pk: policy pk
+        :param perm_pk: policy permission pk
+        :return: permission set
         """
-        return get_object_or_404(models.Authorization, source=source,
-                                                target=target)
-
-    def create_perm(self, request):
-        """
-
-        """
-        serializer = self.get_serializer(data=request.data)
+        object = get_object_or_404(models.AuthPolicyPermissions,
+                                   pk=perm_pk,
+                                   source=source_pk
+                                   )
+        serializer = serializers.AuthorizationPolicyUpdateSerializer(instance=object, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def update_perm(self, request):
+    def destroy_permission_set(self, request, source_pk, perm_pk):
+        """Policy Permission set will be deleted here
+
+           :param request:
+           :param source_pk: policy pk
+           :param perm_pk: policy permission pk
+           :return: permission set
         """
+        models.AuthPolicyPermissions.objects\
+            .filter(pk=perm_pk,
+                    source=source_pk
+                    )\
+            .delete()
 
-        """
-        obj = self.get_object(request.data.get('source'), request.data.get('target'))
-        serializer = self.get_serializer(instance=obj, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def has_perm(self, request):
+    def validate_policy_permission(self, request):
         """check authorization w.r.t target
 
-        GET Data example :
-
-        {
-            "access_type": "read",
-            "target": "P1",
-            "source": "W1"
-        }
-
         """
-        serializer = serializers.CheckAccessSerializer(data=request.query_params)
+        serializer = serializers.PolicyValidateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        obj = self.get_object(serializer.data.get('source'), serializer.data.get('target'))
+        object = get_object_or_404(models.AuthPolicyPermissions,
+                                   target=serializer.data.get('resource'),
+                                   source__source=serializer.data.get('source')
+                                   )
 
-        response = serializer.check_perm(obj, serializer.data.get('access_type'))
+        response = serializer.check_perm(object, serializer.data.get('action'))
 
-        return Response(response, status=status.HTTP_200_OK)
+        return Response({'allowed': response}, status=status.HTTP_200_OK)
 
 
 

@@ -3,7 +3,7 @@
 
 """
 - authorization.admin
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 - This file contains admin models of authorization micro service
 """
@@ -25,16 +25,28 @@ from django.contrib import admin
 from authorization import models
 
 
-class AuthorizationAdmin(admin.ModelAdmin):
+class AuthorizationPolicyAdmin(admin.ModelAdmin):
     """
     """
-    list_display = ('id', 'token', 'source', 'target', 'create', 'update', 'read', 'delete', )
-    list_display_links = ('token', 'source', 'target',)
-    list_filter = ('create', 'update', 'read', 'delete', )
-    search_fields = ('id', 'token', 'source', 'target', )
+    list_display = ('id', 'source', 'created_at', 'modified_at', )
+    list_display_links = ('source',)
+    search_fields = ('id', 'source', )
     list_per_page = 20
     ordering = ('-id',)
 
-admin.site.register(models.Authorization, AuthorizationAdmin)
+
+class AuthorizationPolicyPermAdmin(admin.ModelAdmin):
+    """
+    """
+    list_display = ('id', 'source', 'target', 'create', 'update', 'read', 'delete', 'created_at', 'modified_at', )
+    list_display_links = ('source', 'target',)
+    list_filter = ('create', 'update', 'read', 'delete', )
+    search_fields = ('id', 'source', 'target', )
+    list_per_page = 20
+    ordering = ('-id',)
+
+
+admin.site.register(models.AuthPolicy, AuthorizationPolicyAdmin)
+admin.site.register(models.AuthPolicyPermissions, AuthorizationPolicyPermAdmin)
 
 
