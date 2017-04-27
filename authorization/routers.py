@@ -18,17 +18,20 @@ from django.conf.urls import url
 # own app
 from authorization import views
 
-POLCIY_LOKUP_FIELD_RGX = getattr(settings, 'SOURCE_RGX')
+SOURCE_UUID_REGEX = getattr(settings, 'SOURCE_RGX')
 
 
-policy_list = views.AuthorizationPolicyViewSet.as_view({
-    'get': 'list',
+policy_create = views.AuthorizationPolicyViewSet.as_view({
     'post': 'create',
 })
 
 policy_detail = views.AuthorizationPolicyViewSet.as_view({
     'get': 'retrieve',
     'delete': 'destroy'
+})
+
+policy_list = views.AuthorizationPolicyViewSet.as_view({
+    'get': 'list_source_policy',
 })
 
 policy_update = views.AuthorizationPolicyViewSet.as_view({
@@ -43,11 +46,14 @@ policy_validate = views.AuthorizationPolicyViewSet.as_view({
 
 urlpatterns = [
         url(r'policy/$',
-            policy_list,
-            name='authorization-policy'),
+            policy_create,
+            name='authorization-policy-create'),
         url(r'policy/(?P<pk>\d+)/$',
             policy_detail,
             name='authorization-policy-detail'),
+        url(r'policy/list/$',
+            policy_list,
+            name='authorization-policy-list'),
         url(r'policy/(?P<source_pk>\d+)/(?P<perm_pk>\d+)/$',
             policy_update,
             name='authorization-policy-update-delete'),

@@ -87,6 +87,16 @@ class AuthorizationPolicyViewSet(viewsets.ModelViewSet):
 
         return Response({'allowed': response}, status=status.HTTP_200_OK)
 
+    def list_source_policy(self, request):
+        """
 
+        :param source: source
+        :return: source resources.
+        """
+        source = request.query_params.get('source')
 
+        policy = get_object_or_404(models.AuthPolicy,
+                                   source=source)
 
+        serializer = self.get_serializer(instance=policy)
+        return Response(serializer.data, status=status.HTTP_200_OK)
