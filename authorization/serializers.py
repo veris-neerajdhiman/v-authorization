@@ -56,7 +56,6 @@ class AuthorizationPolicySerializer(serializers.ModelSerializer):
         :param validated_data: Serializer valid data
         :return: policy instance
         """
-
         permissions = validated_data.pop('source_permission_set')
         policy, created = models.AuthPolicy.objects.get_or_create(**validated_data)
 

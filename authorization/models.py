@@ -38,10 +38,9 @@ class AuthPolicy(models.Model):
     """
 
     # Attributes
-    source = models.CharField(
+    source = models.TextField(
             _('Source (Who ?)'),
             unique=True,
-            max_length=255,
             validators=[
                 RegexValidator(r'{0}'.format(SOURCE_RGX),
                                _('Enter a valid Source. This value may contain only match with Regular'
@@ -90,10 +89,9 @@ class AuthPolicyPermissions(models.Model):
     )
 
     # Attributes
-    target = models.CharField(
+    target = models.TextField(
             _('Target (What ?)'),
             unique=True,
-            max_length=255,
             validators=[
                 RegexValidator(r'{0}'.format(RESOURCE_RGX),
                                _('Enter a valid Resource. This value may contain only match with Regular'

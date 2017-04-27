@@ -325,10 +325,9 @@ REST_FRAMEWORK = {
 
 
 # REGULAR EXPRESSION F  OR MATCHING POLICY SOURCE & \ RESOURCE ###
-SOURCE_RGX = '^[a-z_-]+:[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$'
-RESOURCE_RGX = '^vrn:resource:[a-z_-]+:([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12})?$'
-SAMPLE_RGX_MATCHED_SOURCE = ['organization:2db95648-b5ea-458a-9f07-a9ef51bbca21',
-                             'organization-member:2db95648-b5ea-458a-9f07-a9ef51bbca21',
-                             'organization_member:2db95648-b5ea-458a-9f07-a9ef51bbca21']
+SOURCE_RGX = '^[a-z_-]+:([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}):([a-z_-]+:)?([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}:)?([a-z_-]+:)?([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}:)?$'
+RESOURCE_RGX = '^^vrn:resource:[a-z_-]+:([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}:)?([a-z_-]+:)?([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}:)?([a-z_-]+:)?([0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}:)?$'
+SAMPLE_RGX_MATCHED_SOURCE = ['organization:2db95648-b5ea-458a-9f07-a9ef51bbca21:',
+                             'organization-member:2db95648-b5ea-458a-9f07-a9ef51bbca21:',]
 RESOURCE_RGX_MATCHED_RESOURCE = ['vrn:resource:organization:',
-                                 'vrn:resource:organization:2db95648-b5ea-458a-9f07-a9ef51bbca21']
+                                 'vrn:resource:organization:2db95648-b5ea-458a-9f07-a9ef51bbca21:']
