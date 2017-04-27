@@ -91,7 +91,6 @@ class AuthPolicyPermissions(models.Model):
     # Attributes
     target = models.TextField(
             _('Target (What ?)'),
-            unique=True,
             validators=[
                 RegexValidator(r'{0}'.format(RESOURCE_RGX),
                                _('Enter a valid Resource. This value may contain only match with Regular'
