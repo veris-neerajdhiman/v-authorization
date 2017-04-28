@@ -12,13 +12,12 @@
 from __future__ import unicode_literals
 
 # 3rd party
-from datetime import datetime
 
 # DRF
 from rest_framework import serializers
 
 # Django
-
+from django.db import IntegrityError
 
 # local
 
@@ -44,6 +43,7 @@ class AuthorizationPolicySerializer(serializers.ModelSerializer):
     """Serializer used for adding Policy
 
     """
+    source = serializers.CharField(required=True)
     source_permission_set = AuthorizationPolicyPermSerializer(many=True)
 
     class Meta:
@@ -60,7 +60,10 @@ class AuthorizationPolicySerializer(serializers.ModelSerializer):
         policy, created = models.AuthPolicy.objects.get_or_create(**validated_data)
 
         for permission in permissions:
-            models.AuthPolicyPermissions.objects.create(source=policy, **permission)
+            try:
+                models.AuthPolicyPermissions.objects.create(source=policy, **permission)
+            except IntegrityError:
+                pass
 
         return policy
 
