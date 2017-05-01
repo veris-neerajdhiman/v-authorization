@@ -41,7 +41,7 @@ class AuthorizationPolicyPermAdmin(admin.ModelAdmin):
     list_display = ('id', 'source', 'target', 'create', 'update', 'read', 'delete', 'created_at', 'modified_at', )
     list_display_links = ('source', 'target',)
     list_filter = ('create', 'update', 'read', 'delete', )
-    search_fields = ('id', 'source', 'target', )
+    search_fields = ('id', 'source__source', 'target', )
     list_per_page = 20
     ordering = ('-id',)
 
