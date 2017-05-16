@@ -1,0 +1,25 @@
+version: "2"
+services:
+  authorization_db:
+    image: postgres:9.6
+    ports:
+     - "5432:5432"
+    env_file:
+     - ../locale/env/authorization_service
+    volumes:
+      - /home/veris/micro-services/authorization/data/postgres:/var/lib/postgresql/data
+  v_authorization:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+     - ../locale/env/authorization_service
+    environment:
+     DEBUG: 'true'
+    command: bash -c "python ./manage.py migrate && python ./manage.py runserver 0.0.0.0:8013"
+    volumes:
+     - .:/v-authorization
+    ports:
+     - "8013:8013"
+#    depends_on:
+#      - templates_db
