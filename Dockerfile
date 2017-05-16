@@ -1,7 +1,11 @@
 FROM django
-ADD . /v-authorization
 
 WORKDIR /v-authorization
 
-#RUN apt-get update && apt-get install -y git
+ADD ./requirements/base.txt /v-authorization/requirements/base.txt
+
+
+RUN apt-get update && apt-get install -y git
 RUN pip install -r ./requirements/base.txt
+
+ADD . /v-authorization

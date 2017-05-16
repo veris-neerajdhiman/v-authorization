@@ -3,7 +3,7 @@ services:
   authorization_db:
     image: postgres:9.6
     ports:
-     - "5432:5432"
+     - "9003:5432"
     env_file:
      - ../locale/env/authorization_service
     volumes:
@@ -21,5 +21,4 @@ services:
      - .:/v-authorization
     ports:
      - "8013:8013"
-#    depends_on:
-#      - templates_db
+
