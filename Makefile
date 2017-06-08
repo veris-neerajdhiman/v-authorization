@@ -42,11 +42,11 @@ image:
 
 .PHONY: tag
 tag:
-	docker tag ${id} ${image}
+	docker tag ${id} inforian/auth-service:${version}
 
 .PHONY: push
 push:
-	docker push ${tag}
+	docker push inforian/auth-service:${version}
 
 .PHONY: run
 run:
