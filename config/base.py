@@ -53,11 +53,11 @@ path.append(DJANGO_ROOT)
 DEBUG = False
 # ######### END DEBUG CONFIGURATION
 
-
 # ######### TEST RUNNER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/releases/dev/#new-test-runner
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-# ######### END TEST RUNNER CONFIGURATION
+# TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--with-spec', '--spec-color', '--verbosity=1', ]
 
 
 # ######### MANAGER CONFIGURATION
