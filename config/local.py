@@ -24,6 +24,11 @@ EMAIL_FILE_PATH = normpath(join(SITE_ROOT, 'emails'))
 ########## END EMAIL CONFIGURATION
 
 
+# ######### SECRET CONFIGURATION
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
+# Note: This key should only be used for development and testing.
+SECRET_KEY = get_env_setting('SECRET_KEY')
+# ######### END SECRET CONFIGURATION
 
 ########## DATABASE CONFIGURATION
 DATABASES = {
