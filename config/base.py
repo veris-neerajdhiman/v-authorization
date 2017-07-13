@@ -315,8 +315,8 @@ REST_FRAMEWORK = {
 
 
 # REGULAR EXPRESSION F  OR MATCHING POLICY SOURCE & \ RESOURCE ###
-RESOURCE_RGX = '^vrn:resource:([A-z0-9-]*):?([A-z0-9-]*):?$'
-SOURCE_RGX = '^([A-z0-9-]*):?([A-z0-9-]*):?$'
+RESOURCE_RGX = '^vrn:resource:([A-z0-9-]*):?([A-z0-9-:]*):?'
+SOURCE_RGX = '^([A-z0-9-]*):?([A-z0-9-:]*):?$'
 
 SAMPLE_RGX_MATCHED_SOURCE = ['organization:2db95648-b5ea-458a-9f07-a9ef51bbca21:',
                              'organization-member:2db95648-b5ea-458a-9f07-a9ef51bbca21:',
